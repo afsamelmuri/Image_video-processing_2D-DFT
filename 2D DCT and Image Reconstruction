@@ -1,0 +1,22 @@
+import cv2
+
+# Compute the 2D DCT of the image
+dct_image = cv2.dct(np.float32(image_resized))
+
+# Compute the inverse DCT to reconstruct the image
+idct_image = cv2.idct(dct_image)
+
+# Plot the original and reconstructed images
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(image_resized, cmap='gray')
+plt.title('Original Image')
+plt.colorbar()
+
+plt.subplot(1, 2, 2)
+plt.imshow(idct_image, cmap='gray')
+plt.title('Reconstructed Image using IDCT')
+plt.colorbar()
+
+plt.show()
