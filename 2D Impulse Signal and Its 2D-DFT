@@ -1,0 +1,34 @@
+# Define the 2D impulse signal g2(x, y)
+g2 = np.zeros((N, N))
+g2[N//2-5:N//2+5, N//2-5:N//2+5] = 1
+
+# Compute the 2D DFT of g2(x, y)
+G2 = np.fft.fftshift(np.fft.fft2(g2))
+
+# Compute the magnitude spectrum
+magnitude_spectrum_G2 = np.abs(G2)
+
+# Plot the 2D signal
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(g2, cmap='gray')
+plt.title('2D Impulse Signal g2(x, y)')
+plt.colorbar()
+
+plt.subplot(1, 2, 2)
+plt.imshow(np.log(1 + magnitude_spectrum_G2), cmap='gray')
+plt.title('Magnitude Spectrum of G2(u, v)')
+plt.colorbar()
+
+plt.show()
+
+# Plot the 3D view of the magnitude spectrum
+fig = plt.figure(figsize=(12, 8))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, Y, np.log(1 + magnitude_spectrum_G2), cmap=cm.viridis)
+ax.set_title('3D View of Magnitude Spectrum of G2(u, v)')
+ax.set_xlabel('u')
+ax.set_ylabel('v')
+ax.set_zlabel('Magnitude')
+plt.show()
