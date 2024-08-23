@@ -1,0 +1,41 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import cm
+
+# Define the 2D unit step signal g1(x, y)
+N = 150
+g1 = np.zeros((N, N))
+g1[:, N//2:] = 1
+
+# Compute the 2D DFT of g1(x, y)
+G1 = np.fft.fftshift(np.fft.fft2(g1))
+
+# Compute the magnitude spectrum
+magnitude_spectrum_G1 = np.abs(G1)
+
+# Plot the 2D signal
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(g1, cmap='gray')
+plt.title('2D Unit Step Signal g1(x, y)')
+plt.colorbar()
+
+plt.subplot(1, 2, 2)
+plt.imshow(np.log(1 + magnitude_spectrum_G1), cmap='gray')
+plt.title('Magnitude Spectrum of G1(u, v)')
+plt.colorbar()
+
+plt.show()
+
+# Plot the 3D view of the magnitude spectrum
+X, Y = np.meshgrid(np.arange(-N//2, N//2), np.arange(-N//2, N//2))
+
+fig = plt.figure(figsize=(12, 8))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, Y, np.log(1 + magnitude_spectrum_G1), cmap=cm.viridis)
+ax.set_title('3D View of Magnitude Spectrum of G1(u, v)')
+ax.set_xlabel('u')
+ax.set_ylabel('v')
+ax.set_zlabel('Magnitude')
+plt.show()
