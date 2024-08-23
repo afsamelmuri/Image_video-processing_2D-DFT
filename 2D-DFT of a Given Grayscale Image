@@ -1,0 +1,37 @@
+from skimage import data
+from skimage.color import rgb2gray
+
+# Load a sample image
+image = rgb2gray(data.astronaut())  # Convert to grayscale
+image_resized = image[:N, :N]  # Resize to 150x150 for consistency
+
+# Compute the 2D DFT of the image
+DFT_image = np.fft.fftshift(np.fft.fft2(image_resized))
+
+# Compute the magnitude spectrum
+magnitude_spectrum_image = np.abs(DFT_image)
+
+# Plot the original image
+plt.figure(figsize=(10, 5))
+
+plt.subplot(1, 2, 1)
+plt.imshow(image_resized, cmap='gray')
+plt.title('Grayscale Image')
+plt.colorbar()
+
+plt.subplot(1, 2, 2)
+plt.imshow(np.log(1 + magnitude_spectrum_image), cmap='gray')
+plt.title('Magnitude Spectrum of Image')
+plt.colorbar()
+
+plt.show()
+
+# Plot the 3D view of the magnitude spectrum
+fig = plt.figure(figsize=(12, 8))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, Y, np.log(1 + magnitude_spectrum_image), cmap=cm.viridis)
+ax.set_title('3D View of Magnitude Spectrum of Image')
+ax.set_xlabel('u')
+ax.set_ylabel('v')
+ax.set_zlabel('Magnitude')
+plt.show()
